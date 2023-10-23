@@ -34,7 +34,6 @@ function FeedbackForm({ handleAdd }) {
     }
 
     setText('');
-    setRating(5);
   };
 
   return (

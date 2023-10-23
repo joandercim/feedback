@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 function FeedbackList({ feedback, handleDelete }) {
   if (!feedback || feedback.length === 0) {
-    return <p>No Feedback Yet</p>;
+    return <p>No Feedback yet</p>
   }
   return (
     <div className="feedback-list">
@@ -12,9 +12,9 @@ function FeedbackList({ feedback, handleDelete }) {
         {feedback.map((item) => (
           <motion.div
             key={item.id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ y: 0, opacity: 0 }}
+            animate={{ y: 40, opacity: 1 }}
+            exit={{ y: -50, opacity: 0 }}
           >
             <FeedbackItem
               key={item.id}
@@ -26,14 +26,6 @@ function FeedbackList({ feedback, handleDelete }) {
     </AnimatePresence>
       </div>
   );
-
-  //   return (
-  //     <div className="feedback-list">
-  //       {feedback.map(item => {
-  //         return <FeedbackItem key={item.id} item={item} handleDelete={handleDelete}/>
-  // })}
-  //     </div>
-  //   )
 }
 
 FeedbackList.propTypes = {
