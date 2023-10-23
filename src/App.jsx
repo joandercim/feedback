@@ -1,30 +1,40 @@
-import React from 'react'
-import Header from './components/Header'
-import FeedbackList from './components/FeedbackList'
-import FeedbackData from './components/data/FeedbackData'
+import { v4 as uuidv4 } from 'uuid';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import React from 'react';
+import Header from './components/Header';
+import FeedbackList from './components/FeedbackList';
+import FeedbackData from './components/data/FeedbackData';
 import { useState } from 'react';
 import FeedbackStats from './components/FeedbackStats';
 import FeedbackForm from './components/FeedbackForm';
+import AboutPage from './pages/AboutPage';
 
 function App() {
-    const [feedback, setFeedback] = useState(FeedbackData);
+  const [feedback, setFeedback] = useState(FeedbackData);
 
-    const deleteItem = (id) => {
-        console.log('Removed feed back with id ' + id);
-        setFeedback(feedback.filter(item => item.id !== id));
-    }
+  const deleteItem = (id) => {
+    console.log('Removed feed back with id ' + id);
+    setFeedback(feedback.filter((item) => item.id !== id));
+  };
 
-    return (
-        <>
-            <Header />
-            <div className="container">
-                <FeedbackForm />
-                <FeedbackStats feedback={feedback}/>
-                <FeedbackList feedback={feedback} handleDelete={deleteItem}/>
-            </div>
-        </>
-  )
+  const addFeedback = (newFeedback) => {
+    newFeedback.id = uuidv4();
+    setFeedback([newFeedback, ...feedback]);
+  };
+
+  return (
+    <Router>
+      <Header />
+      <div className="container">
+        <Route exact path='/'>
+          <FeedbackForm handleAdd={addFeedback} />
+          <FeedbackStats feedback={feedback} />
+          <FeedbackList feedback={feedback} handleDelete={deleteItem} />
+        </Route>
+        <Route path="/about" component={AboutPage} />
+      </div>
+    </Router>
+  );
 }
 
-export default App
-
+export default App;
